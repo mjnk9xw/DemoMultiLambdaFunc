@@ -66,3 +66,26 @@ func Create(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, 
 		Body: string(res),
 	}, nil
 }
+
+func List(req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	res, err := services.GetList()
+	if err != nil {
+		return events.APIGatewayProxyResponse{
+			StatusCode: http.StatusInternalServerError,
+			Headers: map[string]string{
+				"Content-Type":                "application/json",
+				"Access-Control-Allow-Origin": "*", // add here
+			},
+			Body: "",
+		}, nil
+	}
+
+	return events.APIGatewayProxyResponse{
+		StatusCode: 200,
+		Headers: map[string]string{
+			"Content-Type":                "application/json",
+			"Access-Control-Allow-Origin": "*", // add here
+		},
+		Body: res,
+	}, nil
+}

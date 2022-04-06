@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 )
@@ -33,5 +34,28 @@ func Create(req *entities.Book) (string, error) {
 	}
 
 	res, _ := json.Marshal(data)
+	return string(res), nil
+}
+func GetList() (string, error) {
+	cfg, err := config.LoadDefaultConfig(context.TODO())
+	if err != nil {
+		return "", err
+	}
+
+	svc := dynamodb.NewFromConfig(cfg)
+	out, err := svc.Scan(context.TODO(), &dynamodb.ScanInput{
+		TableName: aws.String("books"),
+	})
+	if err != nil {
+		return "", err
+	}
+
+	books := []entities.Book{}
+	err = attributevalue.UnmarshalListOfMaps(out.Items, &books)
+	if err != nil {
+		return "", err
+	}
+
+	res, _ := json.Marshal(books)
 	return string(res), nil
 }

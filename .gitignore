@@ -1,1 +1,2 @@
-lambda/lambda_create/create.zip
+lambda/lambda_create/*.zip
+lambda/lambda_getlist/*.zip
