@@ -1,11 +1,11 @@
 package main
 
 import (
-	"Study/AWS/DemoMultiLambdaFunc/services"
+	"Study/AWS/DemoMultiLambdaFunc/delivery"
 
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
 func main() {
-	lambda.Start(services.Create)
+	lambda.Start(delivery.Create)
 }
