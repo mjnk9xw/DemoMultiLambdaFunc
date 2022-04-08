@@ -10,6 +10,8 @@ phases:
   build:
     commands:
       - sh build_booklist.sh
+      - sh build_bookcreate.sh
   post_build:
     commands:
       - aws lambda update-function-code --function-name books_list --zip-file fileb://lambda/lambda_getlist/list.zip
+      - aws lambda update-function-code --function-name books_create --zip-file fileb://lambda/lambda_create/create.zip
