@@ -6,7 +6,7 @@ phases:
        golang: 1.x
   pre_build:
     commands:
-      - go get
+      - go mod tidy
   build:
     commands:
       - sh build_booklist.sh
